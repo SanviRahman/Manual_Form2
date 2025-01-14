@@ -145,6 +145,11 @@
               <a href="index.html" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
                 <div data-i18n="Analytics">Dashboard</div>
+                {% if user.is_authenticated %}
+                <p>{{ user.email}}</p>
+                {% else %}
+                <p>Not Logged In</p>
+                {% endif %}
               </a>
             </li>
 
@@ -558,7 +563,7 @@
                       <div class="dropdown-divider"></div>
                     </li>
                     <li>
-                      <a class="dropdown-item" href="http://127.0.0.1:8000/login/">
+                      <a class="dropdown-item" href="{% url 'logout' %}">
                         <i class="bx bx-power-off me-2"></i>
                         <span class="align-middle">Log Out</span>
                       </a>

@@ -2,7 +2,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from .forms import CustomUserCreationForm
-
+from django.contrib import messages
+from django.contrib.auth.forms import AuthenticationForm
 def register(request):
     if request.method == "POST":
         form = CustomUserCreationForm(request.POST)
@@ -25,10 +26,32 @@ def user_login(request):
             return render(request, "login.html", {"error": "Invalid email or password"})
     return render(request, "login.html")
 
-@login_required
+@login_required(login_url="login")
 def dashboard(request):
     return render(request, "dashboard.html", {"user": request.user})
+        
 
 def user_logout(request):
     logout(request)
     return redirect("login")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
