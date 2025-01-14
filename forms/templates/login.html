@@ -62,11 +62,25 @@
     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
     <script src="{%static 'assets/js/config.js'%}"></script>
+
+    {% if messages %}
+    <div class="bs-toast toast fade show {% for message in messages %} {% if message.tags %} bg-{{ message.tags }} {% endif %} {% endfor %}" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+            <i class="bx bx-bell me-2"></i>
+            <div class="me-auto fw-semibold">Notification</div>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+        {% for message in messages %}
+            {{ message }}
+        {% endfor %}
+        </div>
+    </div>
+    {% endif %}
   </head>
 
   <body>
     <!-- Content -->
-
     <div class="container-xxl">
       <div class="authentication-wrapper authentication-basic container-p-y">
         <div class="authentication-inner">
@@ -180,6 +194,11 @@
                   <button class="btn btn-primary d-grid w-100" type="submit">Sign in</button>
                 </div>
               </form>
+     
+
+
+
+
 
               <p class="text-center">
                 <span>New on our platform?</span>

@@ -3,12 +3,14 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from .forms import CustomUserCreationForm
 from django.contrib import messages
-from django.contrib.auth.forms import AuthenticationForm
+
+
 def register(request):
     if request.method == "POST":
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             form.save()
+            messages.success(request, "Your registration in Successful")
             return redirect("login")
     else:
         form = CustomUserCreationForm()
@@ -21,37 +23,22 @@ def user_login(request):
         user = authenticate(request, email=email, password=password)
         if user is not None:
             login(request, user)
+            messages.success(request, "You are logged in Successfully")
             return redirect("dashboard")
+            
         else:
             return render(request, "login.html", {"error": "Invalid email or password"})
     return render(request, "login.html")
 
 @login_required(login_url="login")
 def dashboard(request):
+    messages.success(request, "You are now logged out Successfully")
     return render(request, "dashboard.html", {"user": request.user})
         
 
 def user_logout(request):
     logout(request)
     return redirect("login")
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

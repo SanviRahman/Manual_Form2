@@ -20,6 +20,8 @@
   data-assets-path="../assets/"
   data-template="vertical-menu-template-free"
 >
+
+{
   <head>
     <meta charset="utf-8" />
     <meta
@@ -66,6 +68,50 @@
   </head>
 
   <body>
+
+    <!-- {% if messages %}
+    <div class="bs-toast toast fade show {% for message in messages %} {% if message.tags %} bg-{{ message.tags }} {% endif %} {% endfor %}" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+            <i class="bx bx-bell me-2"></i>
+            <div class="me-auto fw-semibold">Notification</div>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+        {% for message in messages %}
+            {{ message }}
+        {% endfor %}
+        </div>
+    </div>
+    {% endif %} -->
+
+
+    % if messages %}
+<div
+  class="bs-toast toast fade show {% for message in messages %}{% if message.tags %} bg-{{ message.tags }} {% endif %}{% endfor %}"
+  role="alert"
+  aria-live="assertive"
+  aria-atomic="true"
+  style="position: fixed; top: 20px; right: 20px; z-index: 1050;"
+  >
+  <div class="toast-header">
+  <i class="bx bx-bell me-2"></i>
+  <div class="me-auto fw-semibold">Notification</div>
+  <button
+    type="button"
+    class="btn-close"
+    data-bs-dismiss="toast"
+    aria-label="Close"
+  ></button>
+  </div>
+  <div class="toast-body">
+  {% for message in messages %}
+    {{ message }}
+  {% endfor %}
+  </div>
+  </div>
+  {% endif %}
+
+
     <!-- Layout wrapper -->
     <div class="layout-wrapper layout-content-navbar">
       <div class="layout-container">
@@ -145,11 +191,6 @@
               <a href="index.html" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
                 <div data-i18n="Analytics">Dashboard</div>
-                {% if user.is_authenticated %}
-                <p>{{ user.email}}</p>
-                {% else %}
-                <p>Not Logged In</p>
-                {% endif %}
               </a>
             </li>
 
@@ -256,7 +297,12 @@
                 </li>
               </ul>
             </li>
-            <!-- Components -->
+
+
+
+
+
+            <!-- component end -->
             <li class="menu-header small text-uppercase"><span class="menu-header-text">Components</span></li>
             <!-- Cards -->
             <li class="menu-item">
