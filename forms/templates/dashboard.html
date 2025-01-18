@@ -21,7 +21,7 @@
   data-template="vertical-menu-template-free"
 >
 
-{
+
   <head>
     <meta charset="utf-8" />
     <meta
@@ -65,55 +65,35 @@
     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
     <script src="{% static 'assets/js/config.js'%}"></script>
-  </head>
+
+    <style>
+      @keyframes fadeOut {
+        0% {
+          opacity: 1;
+        }
+        100% {
+          opacity: 0;
+        }
+      }
+
+      .bs-toast {
+        animation: fadeOut 8s forwards;
+        transition: visibility 8s linear;
+        visibility: visible;
+      }
+
+
+    </style>
+    </head>
 
   <body>
 
-    <!-- {% if messages %}
-    <div class="bs-toast toast fade show {% for message in messages %} {% if message.tags %} bg-{{ message.tags }} {% endif %} {% endfor %}" role="alert" aria-live="assertive" aria-atomic="true">
-        <div class="toast-header">
-            <i class="bx bx-bell me-2"></i>
-            <div class="me-auto fw-semibold">Notification</div>
-            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-        </div>
-        <div class="toast-body">
-        {% for message in messages %}
-            {{ message }}
-        {% endfor %}
-        </div>
-    </div>
-    {% endif %} -->
-
-
-    % if messages %}
-<div
-  class="bs-toast toast fade show {% for message in messages %}{% if message.tags %} bg-{{ message.tags }} {% endif %}{% endfor %}"
-  role="alert"
-  aria-live="assertive"
-  aria-atomic="true"
-  style="position: fixed; top: 20px; right: 20px; z-index: 1050;"
-  >
-  <div class="toast-header">
-  <i class="bx bx-bell me-2"></i>
-  <div class="me-auto fw-semibold">Notification</div>
-  <button
-    type="button"
-    class="btn-close"
-    data-bs-dismiss="toast"
-    aria-label="Close"
-  ></button>
-  </div>
-  <div class="toast-body">
-  {% for message in messages %}
-    {{ message }}
-  {% endfor %}
-  </div>
-  </div>
-  {% endif %}
-
+    
 
     <!-- Layout wrapper -->
     <div class="layout-wrapper layout-content-navbar">
+      <!-- Navbar -->
+
       <div class="layout-container">
         <!-- Menu -->
 
@@ -297,10 +277,6 @@
                 </li>
               </ul>
             </li>
-
-
-
-
 
             <!-- component end -->
             <li class="menu-header small text-uppercase"><span class="menu-header-text">Components</span></li>
@@ -562,6 +538,36 @@
                 <li class="nav-item navbar-dropdown dropdown-user dropdown">
                   <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                     <div class="avatar avatar-online">
+                     
+                      <!--  -->
+                      {% if messages %}
+                      {% for message in messages %}
+                      <div
+                          class="bs-toast toast fade show {{ message.tags }}"
+                          role="alert"
+                          aria-live="assertive"
+                          aria-atomic="true"
+                          style="position: fixed; top: 20px; right: 20px; z-index: 1050;background-color: rgb(119, 228, 119);"
+                          >
+                          <div class="toast-header">
+                              <i class="bx bx-bell me-2"></i>
+                              <div class="me-auto fw-semibold">Notification</div>
+                              <button
+                                  type="button"
+                                  class="btn-close"
+                                  data-bs-dismiss="toast"
+                                  aria-label="Close"
+                              ></button>
+                          </div>
+                          <div class="toast-body">
+                              {{ message }}
+                          </div>
+                      </div>
+                        {% endfor %}
+                        {% endif %}
+
+
+
                       <img src="{% static 'assets/img/avatars/1.png'%}" alt class="w-px-40 h-auto rounded-circle" />
                     </div>
                   </a>
@@ -1237,5 +1243,15 @@
 
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        setTimeout(function () {
+          var msg = document.getElementsByClassName('bs-toast');
+          if (msg) {
+            msg.remove();
+          }
+        }, 2000);
+      });
+    </script>
   </body>
 </html>

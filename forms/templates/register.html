@@ -64,7 +64,22 @@
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
     <script src="{% static 'assets/js/config.js'%}"></script>
 
+    <style>
+      @keyframes fadeOut {
+        0% {
+          opacity: 1;
+        }
+        100% {
+          opacity: 0;
+        }
+      }
 
+      .bs-toast {
+        animation: fadeOut 8s forwards;
+        transition: visibility 8s linear;
+        visibility: visible;
+      }
+    </style>
     
   </head>
 
@@ -172,19 +187,54 @@
               </form>
               <!-- end form -->
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
               {% if messages %}
-              <div class="bs-toast toast fade show {% for message in messages %} {% if message.tags %} bg-{{ message.tags }} {% endif %} {% endfor %}" role="alert" aria-live="assertive" aria-atomic="true">
+              {% for message in messages %}
+              <div
+                  class="bs-toast toast fade show {% if message.tags == 'success' %}bg-success {% else %} bg-danger {% endif %}"
+                  role="alert"
+                  aria-live="assertive"
+                  aria-atomic="true"
+                  style="position: fixed; top: 20px; right: 20px; z-index: 1050;background-color: rgb(119, 228, 119);"
+                  >
                   <div class="toast-header">
                       <i class="bx bx-bell me-2"></i>
                       <div class="me-auto fw-semibold">Notification</div>
-                      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                      <button
+                          type="button"
+                          class="btn-close"
+                          data-bs-dismiss="toast"
+                          aria-label="Close"
+                      ></button>
                   </div>
                   <div class="toast-body">
-                  {% for message in messages %}
                       {{ message }}
-                  {% endfor %}
                   </div>
               </div>
+              {% endfor %}
               {% endif %}
 
 
@@ -237,6 +287,17 @@
     <script src="{% static 'assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js'%}"></script>
 
     <script src="{% static 'assets/vendor/js/menu.js'%}"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        setTimeout(function () {
+          var msg = document.getElementsByClassName('bs-toast');
+          if (msg) {
+            msg.remove();
+          }
+        }, 2000);
+      });
+
+    </script>
     <!-- endbuild -->
 
     <!-- Vendors JS -->
